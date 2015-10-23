@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate{
+class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSource, UIPickerViewDelegate{
     
     //Text field for translation
     @IBOutlet weak var textToTranslate: UITextView!
@@ -30,7 +30,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.viewDidLoad()
         self.pickerView.dataSource = self;
         self.pickerView.delegate = self;
+        self.textToTranslate.delegate = self;
         
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //Dismiss keyboard by touching to anywhere on the screen
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
     // Function about PickerView
@@ -50,11 +61,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         rowSelected = row
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func translate(sender: AnyObject) {
@@ -79,7 +85,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         //var data = NSMutableData()var data = NSMutableData()
         
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
         indicator.center = view.center
         view.addSubview(indicator)
         indicator.startAnimating()
