@@ -32,7 +32,23 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Translate"/>
+                                <connections>
+                                    <action selector="translate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CAV-zX-0wY"/>
+                                </connections>
                             </button>
+                            <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiX-bu-Hq8">
+                                <rect key="frame" x="129" y="352" width="342" height="166"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="216" id="AY1-Bj-iRk"/>
+                                    <constraint firstAttribute="height" constant="216" id="goZ-6B-320"/>
+                                    <constraint firstAttribute="width" constant="300" id="yeO-on-cxf"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="8bC-Xf-vdC" id="TOR-Ne-SaS"/>
+                                    <outlet property="delegate" destination="8bC-Xf-vdC" id="HgY-Hh-Ud4"/>
+                                </connections>
+                            </pickerView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="&lt;Text to Translate&gt;" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dii-Vg-90N">
                                 <rect key="frame" x="20" y="28" width="560" height="128"/>
                                 <animations/>
@@ -57,6 +73,11 @@
                             <constraint firstItem="LaV-KV-DTJ" firstAttribute="centerX" secondItem="Tk9-7M-DEK" secondAttribute="centerX" id="nxZ-oD-Bjx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pickerView" destination="RiX-bu-Hq8" id="ip3-pZ-kFF"/>
+                        <outlet property="textToTranslate" destination="dii-Vg-90N" id="dIt-xB-8jS"/>
+                        <outlet property="translatedText" destination="LaV-KV-DTJ" id="jbE-5i-mNw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

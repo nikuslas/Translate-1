@@ -8,16 +8,48 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate{
     
+    //Text field for translation
     @IBOutlet weak var textToTranslate: UITextView!
     @IBOutlet weak var translatedText: UITextView!
+    
+    //Pickerview to select languages
+    @IBOutlet weak var pickerView: UIPickerView!
+    
+    var lang = "hello"
+    var rowSelected = 0
+    
+    //Creation of pickerview
+    var pickerDataLanguage = ["French", "Gaelic", "Turkish"];
+
     
     //var data = NSMutableData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.pickerView.dataSource = self;
+        self.pickerView.delegate = self;
         
+    }
+
+    // Function about PickerView
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerDataLanguage.count;
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerDataLanguage[row]
+    }
+    
+    //Detecting pickerview selected row
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        rowSelected = row
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,7 +62,14 @@ class ViewController: UIViewController {
         let str = textToTranslate.text
         let escapedStr = str.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        let langStr = ("en|fr").stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        switch rowSelected {
+        case 0: lang = ("en|fr")
+        case 1: lang = ("en|ga")
+        case 2: lang = ("en|tr")
+        default:break
+        }
+        
+        let langStr = lang.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
         let urlStr:String = ("http://api.mymemory.translated.net/get?q="+escapedStr!+"&langpair="+langStr!)
         
@@ -69,4 +108,3 @@ class ViewController: UIViewController {
         
     }
 }
-
