@@ -18,11 +18,12 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
     @IBOutlet weak var pickerView: UIPickerView!
     
     var lang = "hello"
-    var rowSelected = 0
+    var rowSelected1 = 0
+    var rowSelected2 = 0
     
     //Creation of pickerview
-    var pickerDataLanguage = ["French", "Gaelic", "Turkish"];
-
+    var pickerDataLanguageToTranslate = ["English", "French"]
+    var pickerDataLanguageTranslated = ["English", "French", "Gaelic", "Turkish"];
     
     //var data = NSMutableData()
     
@@ -46,21 +47,33 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
 
     // Function about PickerView
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
+        return 2
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerDataLanguage.count;
+        if component == 0{
+            return pickerDataLanguageToTranslate.count
+        }else{
+            return pickerDataLanguageTranslated.count
+        }
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerDataLanguage[row]
+        if component == 0{
+            return pickerDataLanguageToTranslate[row]
+        }else{
+            return pickerDataLanguageTranslated[row]
+        }
     }
     
     //Detecting pickerview selected row
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        rowSelected = row
+        if component == 0 {
+            rowSelected1 = row
+        }else{
+            rowSelected2 = row
+        }
     }
     
     @IBAction func translate(sender: AnyObject) {
@@ -68,14 +81,27 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         let str = textToTranslate.text
         let escapedStr = str.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
-        switch rowSelected {
-        case 0: lang = ("en|fr")
-        case 1: lang = ("en|ga")
-        case 2: lang = ("en|tr")
-        default:break
+        switch rowSelected1 {
+            case 0: switch rowSelected2 {
+                        case 0: lang = ("en|en")
+                        case 1: lang = ("en|fr")
+                        case 2: lang = ("en|ga")
+                        case 3: lang = ("en|tr")
+                        default:break
+                    }
+            case 1: switch rowSelected2 {
+                        case 0: lang = ("fr|en")
+                        case 1: lang = ("fr|fr")
+                        case 2: lang = ("fr|ga")
+                        case 3: lang = ("fr|tr")
+                        default:break
+                    }
+            default:break
         }
         
         let langStr = lang.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+
+        //let session = NSURLSession.sharedSession()
         
         let urlStr:String = ("http://api.mymemory.translated.net/get?q="+escapedStr!+"&langpair="+langStr!)
         
@@ -92,6 +118,8 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         
         var result = "<Translation Error>"
         
+        /*_ = session.dataTaskRequest(request) {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in*/
+            
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
             
             indicator.stopAnimating()
