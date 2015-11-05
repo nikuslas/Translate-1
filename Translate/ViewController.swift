@@ -22,7 +22,7 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
     var rowSelected2 = 0
     
     //Creation of pickerview
-    var pickerDataLanguageToTranslate = ["English", "French"]
+    var pickerDataLanguageToTranslate = ["English", "French", "Gaelic", "Turkish"]
     var pickerDataLanguageTranslated = ["English", "French", "Gaelic", "Turkish"]
     
     //var data = NSMutableData()
@@ -113,6 +113,20 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
                         case 3: lang = ("fr|tr")
                         default:break
                     }
+            case 2: switch rowSelected2 {
+                        case 0: lang = ("ga|en")
+                        case 1: lang = ("ga|fr")
+                        case 2: lang = ("ga|ga")
+                        case 3: lang = ("ga|tr")
+                        default:break
+            }
+            case 3: switch rowSelected2 {
+                        case 0: lang = ("tr|en")
+                        case 1: lang = ("tr|fr")
+                        case 2: lang = ("tr|ga")
+                        case 3: lang = ("tr|tr")
+                        default:break
+            }
             default:break
         }
         
