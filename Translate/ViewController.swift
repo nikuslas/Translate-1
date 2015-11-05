@@ -23,16 +23,25 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
     
     //Creation of pickerview
     var pickerDataLanguageToTranslate = ["English", "French"]
-    var pickerDataLanguageTranslated = ["English", "French", "Gaelic", "Turkish"];
+    var pickerDataLanguageTranslated = ["English", "French", "Gaelic", "Turkish"]
     
     //var data = NSMutableData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.pickerView.dataSource = self;
-        self.pickerView.delegate = self;
-        self.textToTranslate.delegate = self;
-        
+        self.pickerView.dataSource = self
+        self.pickerView.delegate = self
+        self.textToTranslate.delegate = self
+        //self.view.backgroundColor = UIColor.blackColor()
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    //Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,6 +53,12 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
+    /*
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleData = pickerView[row]
+        var myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.whiteColor()])
+        return myTitle
+    }*/
 
     // Function about PickerView
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -79,8 +94,10 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
     @IBAction func translate(sender: AnyObject) {
         
         let str = textToTranslate.text
+        
         let escapedStr = str.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
+        //Define the request
         switch rowSelected1 {
             case 0: switch rowSelected2 {
                         case 0: lang = ("en|en")
