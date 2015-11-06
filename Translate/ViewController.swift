@@ -126,7 +126,10 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         
         let url = NSURL(string: urlStr)
         
-        let request = NSURLRequest(URL: url!)// Creating Http Request
+        // Creating Http Request
+        let request = NSURLRequest(URL: url!)
+        
+        //var request = NSMutableURLRequest(URL: url!)
         
         //var data = NSMutableData()var data = NSMutableData()
         
@@ -137,8 +140,9 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         
         var result = "<Translation Error>"
         
-        /*_ = session.dataTaskRequest(request) {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in*/
-            
+        // tried to update NSURLConnection putting session.dataTaskWithRequest rather than NSURLConnection.sendAsynchronousRequest
+        // session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
             
             indicator.stopAnimating()
