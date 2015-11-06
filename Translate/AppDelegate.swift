@@ -2,8 +2,7 @@
 //  AppDelegate.swift
 //  Translate
 //
-//  Created by Robert O'Connor on 16/10/2015.
-//  Copyright © 2015 WIT. All rights reserved.
+//  Created by Markus Nicolas on 16/10/2015.
 //
 
 import UIKit
