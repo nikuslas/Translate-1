@@ -32,6 +32,9 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         self.pickerView.dataSource = self
         self.pickerView.delegate = self
         self.textToTranslate.delegate = self
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,9 +42,8 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         // Dispose of any resources that can be recreated.
     }
     
-    // Dismiss keyboard by touching to anywhere on the screen
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     // Function about PickerView
@@ -131,8 +133,6 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         
         //var request = NSMutableURLRequest(URL: url!)
         
-        //var data = NSMutableData()var data = NSMutableData()
-        
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
         indicator.center = view.center
         view.addSubview(indicator)
@@ -141,7 +141,7 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
         var result = "<Translation Error>"
         
         // tried to update NSURLConnection putting session.dataTaskWithRequest rather than NSURLConnection.sendAsynchronousRequest
-        // session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+        //var task = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
             
@@ -162,5 +162,6 @@ class ViewController: UIViewController, UITextViewDelegate , UIPickerViewDataSou
                 self.translatedText.text = result
             }
         }
+        //task.resume()
     }
 }
